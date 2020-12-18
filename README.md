@@ -1,6 +1,6 @@
 # SHS monitor
 
-A tool to reproduce SPARK-XXXXX: Jobs disappear intermittently from the SHS under high load.
+A tool to reproduce [SPARK-33841](https://issues.apache.org/jira/browse/SPARK-33841): Jobs disappear intermittently from the SHS under high load.
 
 The issue is caused by [SPARK-29043](https://issues.apache.org/jira/browse/SPARK-29043), which is designated to improve
 the concurrent performance of the History Server. The [change](https://github.com/apache/spark/pull/25797/files#)
