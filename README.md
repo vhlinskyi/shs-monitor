@@ -20,11 +20,11 @@ and event log entries that missed to be updated with a new time, will match that
 The issue can not be reproduced under low load because there are no
 [processing event logs at the beginning of the checkForLogs run.](https://github.com/apache/spark/pull/25797/files#diff-128a6af0d78f4a6180774faedb335d6168dfc4defff58f5aa3021fc1bd767bc0R462)
 
-241 entities are displayed at `20:50:42`:
-![1-241-entities-at-20-50.png](images/1-241-entities-at-20-50.png)
+241 entities are displayed at `21:20:23`:
+![1-241-entities-at-20-50.png](images/1-252-entries-at-21-20.png)
 
-203 entities are displayed at `20:52:17`:
-![2-203-entities-at-20-52.png](images/2-203-entities-at-20-52.png)
+203 entities are displayed at `21:22:15`:
+![2-203-entities-at-20-52.png](images/2-178-at-21-22.png)
 
 The number of loaded applications over time:
 ![4-loaded-applications.png](images/4-loaded-applications.png)
@@ -35,7 +35,7 @@ The number of loaded applications over time:
 * Build SHS from sources:
 ```
 $ git clone https://github.com/apache/spark.git
-$ git checkout origin/branch-3.0
+$ git checkout origin/branch-3.1
 $ export MAVEN_OPTS="-Xmx2g -XX:ReservedCodeCacheSize=1g"
 $ ./build/mvn -DskipTests clean package
 ```
@@ -43,14 +43,14 @@ $ ./build/mvn -DskipTests clean package
 * Download Hadoop AWS and AWS Java SDK
 ```
 $ cd assembly/target/scala-2.12/jars
-$ wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/2.7.4/hadoop-aws-2.7.4.jar
-$ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk/1.7.4/aws-java-sdk-1.7.4.jar
+$ wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.2.0/hadoop-aws-3.2.0.jar
+$ wget https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.11.375/aws-java-sdk-bundle-1.11.375.jar
 ```
 
 * Prepare S3 bucket and user for programmatic access, grant required roles to the user and get access key and secret key
 * Configure SHS to read event logs from S3 by creating the next `conf/spark-defaults.conf`:
 ```
-spark.history.fs.logDirectory  s3a\://shs-reproduce-bucket/eventlog
+spark.history.fs.logDirectory  s3a\://shs-reproduce-bucket/eventlog-3-1
 spark.hadoop.fs.s3a.impl       org.apache.hadoop.fs.s3a.S3AFileSystem
 spark.hadoop.fs.s3a.access.key <YOUR-ACCESS-KEY>
 spark.hadoop.fs.s3a.secret.key <YOUR-SECRET-KEY>
@@ -77,7 +77,7 @@ Ensure that the number of loaded applications decreases periodically:
 ![Running SHS monitor](images/3-running-shs-monitor.png)
 Output of [monitor.sh](monitor.sh) can be found at [reports/loaded.csv](reports/loaded.csv)
 
-> Note: ran 8 producers for ~8 mins (20:47:11 - 20:55:38), produced 800 event log copies.
+> Note: ran 8 producers for ~8 mins, produced 702 event log copies.
 
 
 # Event log template
@@ -107,5 +107,5 @@ print("Done")
 * Verify that event log file has been created
 ```
 $ ls history/
-local-1608227687233
+local-1608318901630
 ```

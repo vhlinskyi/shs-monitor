@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Application ID. Matches event log file name
-TEMPLATE_APP_ID=local-1608227687233
+TEMPLATE_APP_ID=local-1608318901630
 
 # s3 location of event log directory, omiting protocol(e.g. "shs-reproduce-bucket/eventlog") 
 s3_location=$1
